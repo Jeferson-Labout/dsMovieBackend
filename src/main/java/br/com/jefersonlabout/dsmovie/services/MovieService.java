@@ -3,6 +3,7 @@ package br.com.jefersonlabout.dsmovie.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +39,23 @@ public class MovieService {
 		saveMovie.setScore(0.0);
 		return (saveMovie);
 	}
+	@Transactional
+    public ResponseEntity<Movie>atualizaMovie( Long id, Movie movie){
+		
+		if(!repository.existsById(id)){
+			return  ResponseEntity.notFound().build();
+			
+			
+		}
+		movie.setId(id);
+	    repository.save(movie);
+		
+		return ResponseEntity.ok(movie);
+		
+		
+		
+		
+	}
+	
 }
 
